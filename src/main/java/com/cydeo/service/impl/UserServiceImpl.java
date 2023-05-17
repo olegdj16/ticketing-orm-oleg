@@ -8,10 +8,12 @@ import com.cydeo.service.UserService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -56,12 +58,12 @@ public class UserServiceImpl implements UserService {
         //save updated user to database
         userRepository.save(convertedUser);
 
-        userRepository.save(userMapper.convertToEntity(dto));
         return findByUserName(dto.getUserName());
     }
 
     @Override
     public void deleteByUserName(String username) {
+        userRepository.deleteByUserName(username);
 
     }
 }
