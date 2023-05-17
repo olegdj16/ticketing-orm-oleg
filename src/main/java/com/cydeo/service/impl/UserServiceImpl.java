@@ -28,8 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> listAllUsers() {
 
-        List<User> userList = userRepository.findAll(Sort.by("firstName"));
-
+        List<User> userList = userRepository.findAll(Sort.by("firstName")); //SELECT * FROM USER where is_deleted=false;
         return userList.stream().map(userMapper::convertToDto).collect(Collectors.toList());
     }
 
@@ -63,7 +62,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteByUserName(String username) {
-        userRepository.deleteByUserName(username);
+        userRepository.deleteByUserName(username); //deleting from database
 
+    }
+
+    @Override
+    public void delete(String username) {
+        //I am not trying to delete from database
+        //change the flag and keep in the DB
+        User user = userRepository.findByUserName(username);
+        user.setIsDeleted(true);
+        userRepository.save(user);
     }
 }
