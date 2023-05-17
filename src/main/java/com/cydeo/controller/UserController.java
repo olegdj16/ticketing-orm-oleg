@@ -83,7 +83,8 @@ public class UserController {
 
     @GetMapping("/delete/{username}")
     public String deleteUser(@PathVariable("username") String username) {
-        userService.deleteByUserName(username);
+//        userService.deleteByUserName(username);
+        userService.delete(username); //we are not deleting
         return "redirect:/user/create";
     }
 
