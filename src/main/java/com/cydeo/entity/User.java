@@ -22,10 +22,12 @@ public class User extends BaseEntity {
     private boolean enabled;
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+
 }
