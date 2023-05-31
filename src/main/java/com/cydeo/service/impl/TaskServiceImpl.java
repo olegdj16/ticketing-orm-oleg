@@ -42,7 +42,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void save(TaskDTO dto) {
         dto.setTaskStatus(Status.OPEN);
-        dto.setAssignedDate(LocalDate.now());
+        dto.setAssignedDate(LocalDate.now()); //day 4, 41:02
         Task task = taskMapper.convertToEntity(dto);
         taskRepository.save(task);
 
@@ -51,8 +51,19 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void update(TaskDTO dto) {
 
+        Optional<Task> task = taskRepository.findById(dto.getId());
+        Task convertedTask = taskMapper.convertToEntity(dto);
+
+        if(task.isPresent()){
+            convertedTask.setId(task.get().getId());//it will understand as a new object, then assign a new key
+            convertedTask.setTaskStatus(task.get().getTaskStatus());
+            convertedTask.setAssignedDate(task.get().getAssignedDate());
+            taskRepository.save(convertedTask);//saves in database
+        }
+
     }
 
+    //49:38
     @Override
     public void delete(Long id) {
 
@@ -63,5 +74,15 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.save(foundTask.get());
         }
 
+    }
+
+    @Override
+    public int totalNonCompletedTask(String projectCode) {
+        return taskRepository.totalNonCompletedTasks(projectCode);
+    }
+
+    @Override
+    public int totalCompletedTask(String projectCode) {
+        return taskRepository.totalCompletedTasks(projectCode);
     }
 }

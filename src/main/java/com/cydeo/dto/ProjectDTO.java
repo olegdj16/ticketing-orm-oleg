@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Data
 public class ProjectDTO {
 
-    private Long id; //need to have this, or mapping will put this as NULL
+    private Long id; //day 4, 45:10: need to have this, or mapping will put this as NULL
 
     @NotBlank
     private String projectName;
