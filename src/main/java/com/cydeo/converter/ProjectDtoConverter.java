@@ -14,7 +14,7 @@ public class ProjectDtoConverter implements Converter<String, ProjectDTO> {
     ProjectService projectService;
 
     //injection
-    public ProjectDtoConverter(@Lazy ProjectService projectService) {
+    public ProjectDtoConverter(@Lazy ProjectService projectService) { //@1:17:10
         this.projectService = projectService;
     }
 

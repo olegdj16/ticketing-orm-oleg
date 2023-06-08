@@ -17,7 +17,11 @@ public class User extends BaseEntity {
 
     private String firstName;
     private String lastName;
+
+    //@1:15:30
+    @Column(unique = true, nullable = false)
     private String userName;
+
     private String passWord;
     private boolean enabled;
     private String phone;
