@@ -38,10 +38,11 @@ public class SecurityConfig {
                 .authorizeRequests()
                 //inside antMatchers we will include all pages that need authorization @1:03:00 from controller package
                 //
-                .antMatchers("/user/**").hasRole("ADMIN") //this is already default ROLE_ADMIN
-                .antMatchers("/project/**").hasRole("MANAGER")
-                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
-                .antMatchers("/task/**").hasRole("MANAGER")
+//                .antMatchers("/user/**").hasRole("Admin") //this is already default ROLE_ADMIN
+                .antMatchers("/user/**").hasAuthority("Admin")
+                .antMatchers("/project/**").hasRole("Manager")
+                .antMatchers("/task/employee/**").hasRole("Employee")
+                .antMatchers("/task/**").hasRole("Manager")
 //                .antMatchers("/task/**").hasAnyRole("EMPLOYEE", "ADMIN")
 //                .antMatchers("task/**").hasAuthority("ROLE_EMPLOYEE")
                 .antMatchers(
