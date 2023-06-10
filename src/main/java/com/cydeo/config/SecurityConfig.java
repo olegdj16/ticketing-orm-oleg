@@ -32,17 +32,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http){
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
                 .authorizeRequests()
-                //inside antMatchers we will include all pages that need authorization @1:03:00
+                //inside antMatchers we will include all pages that need authorization @1:03:00 from controller package
                 .antMatchers(
                         "/",
                         "/login",
                         "/fragments/**",
                         "/assets/**",
-                        "/images"
-                )
+                        "/images/**"
+                ).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .and().build();
     }
 }
