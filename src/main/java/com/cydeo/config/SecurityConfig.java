@@ -37,6 +37,13 @@ public class SecurityConfig {
         return http
                 .authorizeRequests()
                 //inside antMatchers we will include all pages that need authorization @1:03:00 from controller package
+                //
+                .antMatchers("/user/**").hasRole("ADMIN") //this is already default ROLE_ADMIN
+                .antMatchers("/project/**").hasRole("MANAGER")
+                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
+                .antMatchers("/task/**").hasRole("MANAGER")
+//                .antMatchers("/task/**").hasAnyRole("EMPLOYEE", "ADMIN")
+//                .antMatchers("task/**").hasAuthority("ROLE_EMPLOYEE")
                 .antMatchers(
                         "/",
                         "/login",
@@ -46,7 +53,12 @@ public class SecurityConfig {
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
+//                .httpBasic() //will add login box pop up
+                .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/welcome") // when you successfully log in, this is where you land
+                    .failureUrl("/login?error=true")
+                    .permitAll()
                 .and().build();
     }
 }
